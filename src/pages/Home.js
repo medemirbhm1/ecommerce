@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { client, urlFor } from "../client";
 import ColoredCard from "../components/ColoredCard";
+import SimpleCard from "../components/SimpleCard";
 
 function Home() {
   const [categories, setCategories] = useState([]);
@@ -21,7 +22,7 @@ function Home() {
   }
   async function getLatestFour() {
     const res = await client.fetch(
-      "*[_type == 'product' && category._ref == '2f4ed623-ce27-4e4f-b261-62303e0f1d94' ][0..3]"
+      "*[_type == 'product' && category._ref == '2f4ed623-ce27-4e4f-b261-62303e0f1d94'][0..3]"
     );
     setLatestFour(res);
   }
@@ -29,9 +30,11 @@ function Home() {
     const res = await client.fetch("*[_type == 'feature']");
     setFeatures(res);
   }
-  async function getClothesAndAccessoires(){
-     const res = await client.fetch("*[_type == 'product' && (category.)]");
-      setClothesAndAccessoires(res);
+  async function getClothesAndAccessoires() {
+    const res = await client.fetch(
+      "*[_type == 'product' && (category._ref == '32a56b33-c378-4001-97f0-101d3732ed65' || category._ref == 'c0cdb779-2763-46bb-88bd-af730d66c337')]"
+    );
+    setClothesAndAccessoires(res);
   }
   return (
     <div>
@@ -69,7 +72,7 @@ function Home() {
           />
         ))}
       </ul>
-      <ul className="mt-8 flex flex-wrap justify-between md:justify-center gap-5">
+      <ul className="mt-12 flex flex-wrap justify-between md:justify-center gap-5">
         {features.map(({ _id, title, description, image }) => (
           <li
             key={_id}
@@ -85,7 +88,17 @@ function Home() {
           </li>
         ))}
       </ul>
-      <ul className=""></ul>
+      <p className="mt-12 text-xl font-medium">Discover unique hand-picked items</p>
+      <ul className="mt-8 flex overflow-x-scroll overflow-y-hidden gap-4">
+        {clothesAndAccessoires.map(({ _id, image, desription, price }) => (
+          <SimpleCard
+            key={_id}
+            image={image}
+            description={desription}
+            price={price}
+          />
+        ))}
+      </ul>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 function ColoredCard({ _id, colors, image, desription, price }) {
   return (
     <li
-      className={`w-full flex flex-col rounded-md p-4 md:w-72`}
+      className="w-full flex flex-col rounded-md p-4 md:w-72"
       style={{ backgroundColor: `#${colors[0]}` }}
     >
       <button className="w-7 h-7 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular">
