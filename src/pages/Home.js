@@ -89,7 +89,7 @@ function Home() {
         ))}
       </ul>
       <p className="mt-12 text-xl font-medium">Discover unique hand-picked items</p>
-      <ul className="mt-8 flex overflow-x-scroll overflow-y-hidden gap-4">
+      <ul className="vertical-scroll mt-8 mb-8 pb-4 flex overflow-x-scroll overflow-y-hidden gap-4">
         {clothesAndAccessoires.map(({ _id, image, desription, price }) => (
           <SimpleCard
             key={_id}
