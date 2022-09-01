@@ -19,6 +19,7 @@ function ColoredCard({ _id, colors, image, desription, price }) {
         {colors.slice(1).map((color) => (
           <span
             style={{ backgroundColor: `#${color}` }}
+            key={color}
             className="w-4 h-4 rounded-full"
           ></span>
         ))}

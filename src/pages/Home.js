@@ -22,7 +22,7 @@ function Home() {
   }
   async function getLatestFour() {
     const res = await client.fetch(
-      "*[_type == 'product' && category._ref == '2f4ed623-ce27-4e4f-b261-62303e0f1d94'][0..3]"
+      "*[_type == 'product' && category._ref in ['2f4ed623-ce27-4e4f-b261-62303e0f1d94', '1249c9e3-89c8-4c2c-a944-9c19507510b5', 'cceaa8a3-e2e9-4f8f-845b-93c1bbc8e0f0'] ] | order(_createdAt desc)[0..3]"
     );
     setLatestFour(res);
   }
@@ -88,7 +88,9 @@ function Home() {
           </li>
         ))}
       </ul>
-      <p className="mt-12 text-xl font-medium">Discover unique hand-picked items</p>
+      <p className="mt-12 text-xl font-medium">
+        Discover unique hand-picked items
+      </p>
       <ul className="vertical-scroll mt-8 mb-8 pb-4 flex overflow-x-scroll overflow-y-hidden gap-4">
         {clothesAndAccessoires.map(({ _id, image, desription, price }) => (
           <SimpleCard
@@ -99,6 +101,24 @@ function Home() {
           />
         ))}
       </ul>
+      <div className=" bg-[#5959D9] rounded-t-md p-6 text-disabled">
+        <p className="max-w-lg">
+          Yes!
+          <br />
+          Send me exclusive offers, unique gift ideas, and personalized tips for
+          shopping and selling on Commerce.
+        </p>
+        <form className="mt-8 w-full md:w-[700px] flex bg-softbackground rounded-full mx-auto p-2 text-xs">
+          <input
+            type="text"
+            placeholder="Drop your email"
+            className="rounded-full focus:outline-0 text-subtext caret-url flex-1 pl-1"
+          />
+          <button type="submit" className="bg-third p-3 rounded-full">
+            subscribe
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
