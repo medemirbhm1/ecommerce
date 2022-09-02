@@ -76,7 +76,7 @@ function Home() {
         {features.map(({ _id, title, description, image }) => (
           <li
             key={_id}
-            className="w-full lg:w-[400px] flex items-center justify-between  gap-4 bg-graybackground p-5 rounded-lg"
+            className="w-full lg:w-[400px] flex items-center justify-between  gap-4 bg-disabled p-5 rounded-lg"
           >
             <div>
               <h4 className="text-lg font-medium mb-3 text-middleblack">
@@ -108,13 +108,13 @@ function Home() {
           Send me exclusive offers, unique gift ideas, and personalized tips for
           shopping and selling on Commerce.
         </p>
-        <form className="mt-8 w-full md:w-[700px] flex bg-softbackground rounded-full mx-auto p-2 text-xs">
+        <form className="mt-8 w-full flex flex-col gap-y-4 rounded-full mx-auto text-sm md:w-[700px] md:flex-row md:bg-disabled p-2">
           <input
             type="text"
             placeholder="Drop your email"
-            className="rounded-full focus:outline-0 text-subtext caret-url flex-1 pl-1"
+            className="rounded-full focus:outline-0 text-subtext caret-url flex-1 p-3"
           />
-          <button type="submit" className="bg-third p-3 rounded-full">
+          <button type="submit" className="bg-third p-2 rounded-full">
             subscribe
           </button>
         </form>
