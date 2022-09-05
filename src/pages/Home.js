@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { client, urlFor } from "../client";
+import CatgLinks from "../components/CatgLinks";
 import ColoredCard from "../components/ColoredCard";
 import SimpleCard from "../components/SimpleCard";
 
 function Home() {
-  const [categories, setCategories] = useState([]);
   const [latestFour, setLatestFour] = useState([]);
   const [features, setFeatures] = useState([]);
   const [clothesAndAccessoires, setClothesAndAccessoires] = useState([]);
+  const [randomCategories, setRandomCategories] = useState([]);
+
   useState(() => {
-    getCategories();
+    getRandomCategories();
     getLatestFour();
     getFeatures();
     getClothesAndAccessoires();
   }, []);
-
-  async function getCategories() {
+  async function getRandomCategories() {
     const res = await client.fetch("*[_type == 'category']");
-    setCategories(res);
+    const shuffled = [...res].sort(() => 0.5 - Math.random()).slice(0, 3);
+    setRandomCategories(shuffled);
   }
   async function getLatestFour() {
     const res = await client.fetch(
@@ -38,28 +40,19 @@ function Home() {
   }
   return (
     <div>
-      <ul className="w-full order-2 hidden  md:flex justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-2 text-text">
-        {categories.map(({ title, _id }) => (
-          <li className="transition hover:text-primary" key={_id}>
-            <Link to="/">{title}</Link>
+      <CatgLinks />
+      <ul className="flex justify-between gap-y-4 flex-wrap mt-6">
+        {randomCategories.map(({ title, _id, image }) => (
+          <li key={_id} className="w-full md:w-[30%]">
+            <Link
+              to={`/${title}`}
+              className={`flex items-end text-disabled p-2 w-full h-36 bg-cover bg-center rounded-md relative before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-thickblack before:rounded-md before:opacity-30`}
+              style={{ backgroundImage: `url('${urlFor(image)}')` }}
+            >
+              <span className="z-10">{title}</span>
+            </Link>
           </li>
         ))}
-      </ul>
-      <ul className="flex justify-between gap-y-4 flex-wrap mt-6">
-        {[...categories]
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 3)
-          .map(({ title, _id, image }) => (
-            <li key={_id} className="w-full md:w-[30%]">
-              <Link
-                to={`/${title}`}
-                className={`flex items-end text-disabled p-2 w-full h-36 bg-cover bg-center rounded-md relative before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-thickblack before:rounded-md before:opacity-30`}
-                style={{ backgroundImage: `url('${urlFor(image)}')` }}
-              >
-                <span className="z-10">{title}</span>
-              </Link>
-            </li>
-          ))}
       </ul>
       <ul className="flex flex-wrap justify-between mt-8 gap-5">
         {latestFour.map(({ _id, colors, image, desription, price }) => (

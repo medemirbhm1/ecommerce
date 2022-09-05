@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
+import Categorie from "./pages/Categorie";
 import Home from "./pages/Home";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/:slug" element={<Categorie/>}/>
           </Routes>
         </Router>
       </div>
