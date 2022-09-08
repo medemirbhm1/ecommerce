@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { client } from "../client";
 import CatgLinks from "../components/CatgLinks";
 import ColoredCard from "../components/ColoredCard";
-import SimpleCard from "../components/SimpleCard";
 
 function Category() {
   const { slug } = useParams();
@@ -17,7 +16,7 @@ function Category() {
 
   useEffect(() => {
     setProducts([]);
-    setShowButton(true)
+    setShowButton(true);
     getCategory().then((res) => {
       setId(res._id);
       getProducts(res._id, true);
