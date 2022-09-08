@@ -1,13 +1,35 @@
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { urlFor } from "../client";
 
-function SimpleCard({ image, description, price }) {
+function SimpleCard({ id, image, description, price }) {
+  const [liked, setLiked] = useState(false);
+  useEffect(() => {
+    const arr = JSON.parse(window.localStorage.getItem("likes"));
+    if (arr.includes(id)) {
+      setLiked(true);
+    }
+  }, []);
+  function handleLike() {
+    let arr = JSON.parse(window.localStorage.getItem("likes"));
+    if (arr.includes(id)) {
+      arr = arr.filter((el) => el !== id);
+    } else {
+      arr.push(id);
+    }
+    setLiked((old) => !old);
+    window.localStorage.setItem("likes", JSON.stringify(arr));
+  }
   return (
     <li className="w-72 flex flex-col rounded-md p-4 bg-disabled flex-shrink-0 text-text shadow">
-      <button className="w-8 h-8 text-sm rounded-full flex justify-center items-center self-end text-regular border-border border-2">
+      <button
+        className={`w-8 h-8 text-sm rounded-full flex justify-center items-center self-end text-regular border-border border-2 ${
+          liked ? "bg-third text-disabled" : ""
+        }`}
+        onClick={handleLike}
+      >
         <FontAwesomeIcon icon={faHeart} />
       </button>
       <img src={urlFor(image)} className="w-40 self-center" />

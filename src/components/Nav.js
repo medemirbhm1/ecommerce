@@ -15,7 +15,7 @@ function Nav() {
     const res = await client.fetch("*[_type == 'category']");
     setCategories(res);
   }, []);
-  
+
   return (
     <nav className="py-6 flex items-center justify-between flex-wrap gap-y-5">
       <Link
@@ -69,12 +69,17 @@ function Nav() {
               <FontAwesomeIcon icon={faXmark} />
             </button>
           </li>
-          {categories.map(({ title, _id }) => (
+          {categories.map(({ title, _id, slug }) => (
             <li
               key={_id}
               className="relative w-fit before:w-0 hover:before:w-full before:h-[1.5px] before:absolute before:left-0 before:bottom-[-4px] before:bg-third before:transition-width before:duration-300 before:ease-linear"
             >
-              <Link to="/">{title}</Link>
+              <Link
+                to={`/${slug.current}`}
+                onClick={() => setMenuActive(false)}
+              >
+                {title}
+              </Link>
             </li>
           ))}
         </ul>

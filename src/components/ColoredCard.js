@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { urlFor } from "../client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
-function ColoredCard({ _id, colors, image, desription, price }) {
+function ColoredCard({ id, colors, image, desription, price }) {
+  const [liked, setLiked] = useState(false);
+  useEffect(() => {
+    const arr = JSON.parse(window.localStorage.getItem("likes"));
+    if (arr.includes(id)) {
+      setLiked(true);
+    }
+  }, []);
+  function handleLike() {
+    let arr = JSON.parse(window.localStorage.getItem("likes"));
+    if (arr.includes(id)) {
+      arr = arr.filter((el) => el !== id);
+    } else {
+      arr.push(id);
+    }
+    setLiked((old) => !old);
+    window.localStorage.setItem("likes", JSON.stringify(arr));
+  }
   return (
     <li
       className="w-full flex flex-col rounded-md p-4 md:w-72"
       style={{ backgroundColor: `#${colors[0]}` }}
     >
-      <button className="w-7 h-7 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular">
+      <button
+        className={`w-7 h-7 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular ${
+          liked ? "bg-third text-disabled" : ""
+        }`}
+        onClick={handleLike}
+      >
         <FontAwesomeIcon icon={faHeart} />
       </button>
       <img src={urlFor(image)} className="self-center w-40" alt="" />

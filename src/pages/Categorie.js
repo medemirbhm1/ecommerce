@@ -10,7 +10,7 @@ function Category() {
   const { slug } = useParams();
   const [products, setProducts] = useState([]);
   const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(1);
+  const [end, setEnd] = useState(19);
   const [id, setId] = useState("");
   const [showButton, setShowButton] = useState(true);
 
@@ -32,21 +32,20 @@ function Category() {
     let res;
     if (firstRun) {
       res = await client.fetch(
-        `*[_type == 'product' && category._ref == "${id}"][${0}..${1}]`
+        `*[_type == 'product' && category._ref == "${id}"][${0}..${19}]`
       );
-      setStart(2);
-      setEnd(3);
+      setStart(20);
+      setEnd(39);
     } else {
       res = await client.fetch(
         `*[_type == 'product' && category._ref == "${id}"][${start}..${end}]`
       );
-      setStart((old) => old + 2);
-      setEnd((old) => old + 2);
+      setStart((old) => old + 20);
+      setEnd((old) => old + 20);
     }
     setProducts((old) => old.concat(res));
-    if (res.length < 2) {
+    if (res.length < 20) {
       setShowButton(false);
-      console.log("hi");
     }
   }
   return (
@@ -56,6 +55,7 @@ function Category() {
         {products.map(({ _id, colors, image, desription, price }) => (
           <ColoredCard
             key={_id}
+            id={_id}
             colors={colors}
             image={image}
             desription={desription}

@@ -5,8 +5,11 @@ import Categorie from "./pages/Categorie";
 import Home from "./pages/Home";
 
 function App() {
-  const [likes, setLikes] = useState([]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!JSON.parse(window.localStorage.getItem("likes"))) {
+      window.localStorage.setItem("likes", "[]");
+    }
+  }, []);
   return (
     <div className="font-sans min-h-screen bg-softbackground">
       <div className="container mx-auto px-4">

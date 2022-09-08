@@ -24,7 +24,7 @@ function Home() {
   }
   async function getLatestFour() {
     const res = await client.fetch(
-      "*[_type == 'product' && category._ref in ['2f4ed623-ce27-4e4f-b261-62303e0f1d94', '1249c9e3-89c8-4c2c-a944-9c19507510b5', 'cceaa8a3-e2e9-4f8f-845b-93c1bbc8e0f0'] ] | order(_createdAt desc)[0..3]"
+      "*[_type == 'product'] | order(_createdAt desc)[0..3]"
     );
     setLatestFour(res);
   }
@@ -58,6 +58,7 @@ function Home() {
         {latestFour.map(({ _id, colors, image, desription, price }) => (
           <ColoredCard
             key={_id}
+            id={_id}
             colors={colors}
             image={image}
             desription={desription}
@@ -88,6 +89,7 @@ function Home() {
         {clothesAndAccessoires.map(({ _id, image, desription, price }) => (
           <SimpleCard
             key={_id}
+            id={_id}
             image={image}
             description={desription}
             price={price}
