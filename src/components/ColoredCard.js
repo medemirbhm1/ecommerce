@@ -6,21 +6,36 @@ import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 function ColoredCard({ id, colors, image, desription, price }) {
   const [liked, setLiked] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
-    const arr = JSON.parse(window.localStorage.getItem("likes"));
-    if (arr.includes(id)) {
+    const likesArr = JSON.parse(window.localStorage.getItem("likes"));
+    if (likesArr.includes(id)) {
       setLiked(true);
+    }
+    const cart = JSON.parse(window.localStorage.getItem("cart"));
+    if (cart.some((product) => product.id === id)) {
+      setAddedToCart(true);
     }
   }, []);
   function handleLike() {
     let arr = JSON.parse(window.localStorage.getItem("likes"));
-    if (arr.includes(id)) {
+    if (liked) {
       arr = arr.filter((el) => el !== id);
     } else {
       arr.push(id);
     }
     setLiked((old) => !old);
     window.localStorage.setItem("likes", JSON.stringify(arr));
+  }
+  function handleAddToCart() {
+    let cart = JSON.parse(window.localStorage.getItem("cart"));
+    if (addedToCart) {
+      cart = cart.filter((el) => el.id !== id);
+    } else {
+      cart.push({ id, colors, image, price });
+    }
+    setAddedToCart((old) => !old);
+    window.localStorage.setItem("cart", JSON.stringify(cart));
   }
   return (
     <li
@@ -49,7 +64,12 @@ function ColoredCard({ id, colors, image, desription, price }) {
       <p className=" mt-6 mb-6 text-text">{desription}</p>
       <div className="flex items-center justify-between mt-auto">
         <p className="text-text">{price} $</p>
-        <button className="w-8 h-8 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular">
+        <button
+          className={`w-8 h-8 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular ${
+            addedToCart ? "bg-third text-disabled" : ""
+          }`}
+          onClick={handleAddToCart}
+        >
           <FontAwesomeIcon icon={faCartPlus} />
         </button>
       </div>

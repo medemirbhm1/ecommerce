@@ -3,6 +3,7 @@ import {
   faMagnifyingGlass,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -24,9 +25,16 @@ function Nav() {
       >
         E-commerce
       </Link>
-      <button className="ml-auto w-10 h-10 bg-third flex items-center justify-center rounded-full text-softbackground md:ml-0 md:order-1">
-        <FontAwesomeIcon icon={faCartShopping} />
-      </button>
+      <div className="ml-auto flex gap-2 md:ml-0 md:order-1">
+        <button className="w-10 h-10 flex items-center justify-center rounded-full text-third border border-third">
+          <Link to="/likes">
+            <FontAwesomeIcon icon={faHeart} />
+          </Link>
+        </button>
+        <button className="w-10 h-10 bg-third flex items-center justify-center rounded-full text-softbackground">
+          <FontAwesomeIcon icon={faCartShopping} />
+        </button>
+      </div>
 
       <form className="w-full text-sm bg-disabled items-center gap-x-4 p-3 rounded-full flex md:w-fit">
         <select
