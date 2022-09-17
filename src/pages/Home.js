@@ -55,7 +55,7 @@ function Home() {
         ))}
       </ul>
       <ul className="flex flex-wrap justify-between mt-8 gap-5">
-        {latestFour.map(({ _id, colors, image, desription, price }) => (
+        {latestFour.map(({ _id, colors, image, desription, price, title }) => (
           <ColoredCard
             key={_id}
             id={_id}
@@ -63,6 +63,7 @@ function Home() {
             image={image}
             desription={desription}
             price={price}
+            title={title}
           />
         ))}
       </ul>
@@ -86,15 +87,19 @@ function Home() {
         Discover unique hand-picked items
       </p>
       <ul className="vertical-scroll mt-8 mb-8 pb-4 flex overflow-x-scroll overflow-y-hidden gap-4">
-        {clothesAndAccessoires.map(({ _id, image, desription, price }) => (
-          <SimpleCard
-            key={_id}
-            id={_id}
-            image={image}
-            description={desription}
-            price={price}
-          />
-        ))}
+        {clothesAndAccessoires.map(
+          ({ _id, image, desription, price, title, colors }) => (
+            <SimpleCard
+              key={_id}
+              id={_id}
+              image={image}
+              description={desription}
+              price={price}
+              title={title}
+              colors={colors}
+            />
+          )
+        )}
       </ul>
       <div className=" bg-[#5959D9] rounded-t-md p-6 text-disabled">
         <p className="max-w-lg">

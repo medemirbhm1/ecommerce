@@ -52,7 +52,7 @@ function Category() {
     <div>
       <CatgLinks location={slug} />
       <ul className="flex flex-wrap mt-8 gap-5">
-        {products.map(({ _id, colors, image, desription, price }) => (
+        {products.map(({ _id, colors, image, desription, price, title }) => (
           <ColoredCard
             key={_id}
             id={_id}
@@ -60,6 +60,7 @@ function Category() {
             image={image}
             desription={desription}
             price={price}
+            title={title}
           />
         ))}
         {showButton ? (

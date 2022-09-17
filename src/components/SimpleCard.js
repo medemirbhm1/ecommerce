@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { urlFor } from "../client";
 
-function SimpleCard({ id, colors, image, description, price }) {
+function SimpleCard({ id, colors, image, description, price, title }) {
   const [liked, setLiked] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
@@ -32,7 +32,15 @@ function SimpleCard({ id, colors, image, description, price }) {
     if (addedToCart) {
       cart = cart.filter((el) => el.id !== id);
     } else {
-      cart.push({ id, colors, image, price });
+      cart.push({
+        id,
+        colors,
+        image,
+        price,
+        title,
+        quantity: 1,
+        chosenColor: colors[1],
+      });
     }
     setAddedToCart((old) => !old);
     window.localStorage.setItem("cart", JSON.stringify(cart));
@@ -41,7 +49,7 @@ function SimpleCard({ id, colors, image, description, price }) {
     <li className="w-72 flex flex-col rounded-md p-4 bg-disabled flex-shrink-0 text-text shadow">
       <button
         className={`w-8 h-8 text-sm rounded-full flex justify-center items-center self-end text-regular border-border border-2 ${
-          liked ? "bg-third text-disabled" : ""
+          liked ? "bg-third !text-disabled" : ""
         }`}
         onClick={handleLike}
       >
@@ -54,7 +62,7 @@ function SimpleCard({ id, colors, image, description, price }) {
         <button
           onClick={handleAddToCart}
           className={`w-8 h-8 text-sm rounded-full flex justify-center items-center self-end text-regular border-border border-2 ${
-            addedToCart ? "bg-third text-disabled" : ""
+            addedToCart ? "bg-third !text-disabled" : ""
           }`}
         >
           <FontAwesomeIcon icon={faCartPlus} />

@@ -8,15 +8,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { client } from "../client";
+import Modal from "../Modal";
+import Cart from "./Cart";
 
 function Nav() {
   const [menuActive, setMenuActive] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   useState(async () => {
     const res = await client.fetch("*[_type == 'category']");
     setCategories(res);
   }, []);
-
+  function toggleModal() {
+    setShowModal((old) => !old);
+    const body = document.querySelector("body");
+    body.classList.add("modal-active");
+  }
   return (
     <nav className="py-6 flex items-center justify-between flex-wrap gap-y-5">
       <Link
@@ -31,7 +38,10 @@ function Nav() {
             <FontAwesomeIcon icon={faHeart} />
           </Link>
         </button>
-        <button className="w-10 h-10 bg-third flex items-center justify-center rounded-full text-softbackground">
+        <button
+          className="w-10 h-10 bg-third flex items-center justify-center rounded-full text-softbackground"
+          onClick={toggleModal}
+        >
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>
@@ -92,6 +102,11 @@ function Nav() {
           ))}
         </ul>
       )}
+      {showModal ? (
+        <Modal>
+          <Cart setShowModal={setShowModal} />
+        </Modal>
+      ) : null}
     </nav>
   );
 }

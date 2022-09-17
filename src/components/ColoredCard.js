@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
-function ColoredCard({ id, colors, image, desription, price }) {
+function ColoredCard({ id, colors, image, desription, price, title }) {
   const [liked, setLiked] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
@@ -32,7 +32,15 @@ function ColoredCard({ id, colors, image, desription, price }) {
     if (addedToCart) {
       cart = cart.filter((el) => el.id !== id);
     } else {
-      cart.push({ id, colors, image, price });
+      cart.push({
+        id,
+        colors,
+        image,
+        price,
+        title,
+        quantity: 1,
+        chosenColor: colors[1],
+      });
     }
     setAddedToCart((old) => !old);
     window.localStorage.setItem("cart", JSON.stringify(cart));
@@ -44,7 +52,7 @@ function ColoredCard({ id, colors, image, desription, price }) {
     >
       <button
         className={`w-7 h-7 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular ${
-          liked ? "bg-third text-disabled" : ""
+          liked ? "bg-third !text-disabled" : ""
         }`}
         onClick={handleLike}
       >
@@ -66,7 +74,7 @@ function ColoredCard({ id, colors, image, desription, price }) {
         <p className="text-text">{price} $</p>
         <button
           className={`w-8 h-8 text-sm rounded-full flex justify-center items-center self-end bg-disabled text-regular ${
-            addedToCart ? "bg-third text-disabled" : ""
+            addedToCart ? "bg-third !text-disabled" : ""
           }`}
           onClick={handleAddToCart}
         >
