@@ -31,6 +31,11 @@ function Nav() {
     e.preventDefault();
     navigate(`/search/${category}/${searchText}`);
   }
+  function handleShowMenu(method) {
+    const body = document.querySelector("body");
+    body.classList.toggle("modal-active");
+    setMenuActive((old) => !old);
+  }
   return (
     <nav className="py-6 flex items-center justify-between flex-wrap gap-y-5">
       <Link
@@ -72,7 +77,7 @@ function Nav() {
         <button
           type="button"
           className="flex flex-col gap-1 md:hidden"
-          onClick={() => setMenuActive(true)}
+          onClick={handleShowMenu}
         >
           <span className=" w-4 h-[2px] bg-medium"></span>
           <span className=" w-3 h-[2px] bg-medium"></span>
@@ -92,12 +97,9 @@ function Nav() {
         </button>
       </form>
       {menuActive && (
-        <ul className="absolute h-screen w-screen flex flex-col top-0 left-0 gap-6 p-7 font-mediu text-softblack bg-softbackground z-50">
+        <ul className="fixed h-screen w-screen flex flex-col top-0 left-0 gap-6 p-7 font-mediu text-softblack bg-softbackground z-50">
           <li className="text-3xl self-end mb-7">
-            <button
-              className="text-primary"
-              onClick={() => setMenuActive(false)}
-            >
+            <button className="text-primary" onClick={handleShowMenu}>
               <FontAwesomeIcon icon={faXmark} />
             </button>
           </li>
@@ -106,10 +108,7 @@ function Nav() {
               key={_id}
               className="relative w-fit before:w-0 hover:before:w-full before:h-[1.5px] before:absolute before:left-0 before:bottom-[-4px] before:bg-third before:transition-width before:duration-300 before:ease-linear"
             >
-              <Link
-                to={`/${slug.current}`}
-                onClick={() => setMenuActive(false)}
-              >
+              <Link to={`/${slug.current}`} onClick={handleShowMenu}>
                 {title}
               </Link>
             </li>

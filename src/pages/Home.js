@@ -54,7 +54,7 @@ function Home() {
           </li>
         ))}
       </ul>
-      <ul className="flex flex-wrap justify-between mt-8 gap-5">
+      <ul className="flex flex-wrap justify-center mt-8 gap-5">
         {latestFour.map(({ _id, colors, image, desription, price, title }) => (
           <ColoredCard
             key={_id}
