@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import Categorie from "./pages/Categorie";
 import Home from "./pages/Home";
 import Likes from "./pages/Likes";
+import Search from "./pages/Search";
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/:slug" element={<Categorie />} />
             <Route path="/likes" element={<Likes />} />
+            <Route path="/search/:category/:text" element={<Search />} />
           </Routes>
         </Router>
       </div>

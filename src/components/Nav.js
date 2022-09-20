@@ -6,7 +6,7 @@ import {
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { client } from "../client";
 import Modal from "../Modal";
 import Cart from "./Cart";
@@ -15,6 +15,9 @@ function Nav() {
   const [menuActive, setMenuActive] = useState(false);
   const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [category, setCategory] = useState("All");
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
   useState(async () => {
     const res = await client.fetch("*[_type == 'category']");
     setCategories(res);
@@ -23,6 +26,10 @@ function Nav() {
     setShowModal((old) => !old);
     const body = document.querySelector("body");
     body.classList.add("modal-active");
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    navigate(`/search/${category}/${searchText}`);
   }
   return (
     <nav className="py-6 flex items-center justify-between flex-wrap gap-y-5">
@@ -45,15 +52,19 @@ function Nav() {
           <FontAwesomeIcon icon={faCartShopping} />
         </button>
       </div>
-
-      <form className="w-full text-sm bg-disabled items-center gap-x-4 p-3 rounded-full flex md:w-fit">
+      <form
+        className="w-full text-sm bg-disabled items-center gap-x-4 p-3 rounded-full flex md:w-fit"
+        onSubmit={handleSubmit}
+      >
         <select
           className="hidden w-30 p-2 rounded-full focus:outline-none md:block"
           id=""
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         >
           <option value="All">All</option>
-          {categories.map(({ title, _id }) => (
-            <option key={_id} value={title}>
+          {categories.map(({ title, _id, slug }) => (
+            <option key={_id} value={slug.current}>
               {title}
             </option>
           ))}
@@ -68,6 +79,9 @@ function Nav() {
           <span className=" w-2 h-[2px] bg-medium"></span>
         </button>
         <input
+          required
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           placeholder="search"
           type="text"
           id="searchInp"

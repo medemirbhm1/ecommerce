@@ -6,7 +6,6 @@ import {
   faXmark,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { faStripe, faStripeS } from "@fortawesome/free-brands-svg-icons";
 import { urlFor } from "../client";
 import GooglePayButton from "@google-pay/button-react";
 function Cart({ setShowModal }) {
@@ -205,7 +204,7 @@ function Cart({ setShowModal }) {
             />
           </div>
         ) : (
-          <h2 className="">Your cart is empty</h2>
+          <h2 className="mt-2">Your cart is empty</h2>
         )}
       </ul>
     </div>

@@ -42,10 +42,10 @@ function Home() {
     <div>
       <CatgLinks />
       <ul className="flex justify-between gap-y-4 flex-wrap mt-6">
-        {randomCategories.map(({ title, _id, image }) => (
+        {randomCategories.map(({ title, _id, image, slug }) => (
           <li key={_id} className="w-full md:w-[30%]">
             <Link
-              to={`/${title}`}
+              to={`/${slug.current}`}
               className={`flex items-end text-disabled p-2 w-full h-36 bg-cover bg-center rounded-md relative before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-thickblack before:rounded-md before:opacity-30`}
               style={{ backgroundImage: `url('${urlFor(image)}')` }}
             >
